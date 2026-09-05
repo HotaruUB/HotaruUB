@@ -334,8 +334,8 @@ class InlineManager:
         app = GoyGram(bot_token=token, bot_timeout=10, default_transport="api")
         try:
             payload = await app.bot_req("getMe")
-            result = payload.get("result") if isinstance(payload, dict) else None
-            if not isinstance(result, dict) or payload.get("ok") is False:
+            result = payload if isinstance(payload, dict) else None
+            if not isinstance(result, dict):
                 raise InlineError("inline bot token validation failed")
             botid = result.get("id")
             username = result.get("username")
